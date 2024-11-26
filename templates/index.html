@@ -1,21 +1,24 @@
+{%  include 'header.html' %}
+{#{%  include 'style.css' %}#}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <h1>Template is working</h1>
-    <h1>My AWESOME WEBSITE</h1>
-
-    <link rel="stylesheet" href="style.css">
-
 <ul>
     {% for Event in Events %}
-        <li> {{ Event.idk }} {{ Event.anotheridk }}
+        <li> {{ Event.idk }} {{ Event.idk2 }}
         </li>
     {% endfor %}
 </ul>
 </head>
 <body>
 
+<h1>Template is working</h1>
+    <h1>My AWESOME WEBSITE</h1>
+
 </body>
+
+
 </html>
