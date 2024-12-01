@@ -1,0 +1,11 @@
+{%  include 'header.html' %}
+
+<!DOCTYPE html>
+
+<h1> You can update your event</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update Event</button>
+</form>

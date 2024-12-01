@@ -1,0 +1,15 @@
+{%  include 'header.html' %}
+
+<!DOCTYPE html>
+
+<form method ="POST" action ="{% url 'delete_event' object.id %}">
+
+    {% csrf_token %}
+
+    <p> Are you sure you want to delete "{{ object }}" ? </p>
+
+    <a href = "{%  url 'view_event' %}"> Go back </a>
+
+    <button type ="submit"> Delete  </button>
+
+</form>
