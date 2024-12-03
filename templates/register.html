@@ -1,0 +1,17 @@
+{%  include 'header.html' %}
+
+<!DOCTYPE html>
+
+<h1>
+    This our registration page!
+</h1>
+
+<form method ="POST" >
+
+    {% csrf_token %}
+
+    {{form.as_p}}
+
+    <button type ="submit"> Add an user </button>
+
+</form>

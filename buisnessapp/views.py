@@ -5,17 +5,75 @@ from django.http import HttpResponse
 
 from django.shortcuts import render
 from .models import Events, Work_Order
-from .forms import EventsForm, WorkForm
+from .forms import EventsForm, WorkForm, CreateUserForm, LoginForm
+
+from django.contrib.auth.models import auth
+
+#---- For authentication, log in and log out we need to import ----#
+from django.contrib.auth import authenticate, login, logout
 
 # - Home page, Header
+
 def index(request):
 	event = Events.objects.all()
 	return render(request, 'index.html', {'event': Events})
 def header (request):
 	return render(request, 'header.html')
 
+# ----- Register/create a user ------#
 
-# - EVENTS
+def register(request):
+
+	form = CreateUserForm()
+
+	if request.method == 'POST':
+		form = CreateUserForm(request.POST)
+
+		if form.is_valid():
+			form.save()
+			return HttpResponse("The user registered successfully")
+
+	return render(request, 'register.html', {'form': form})
+
+# ----- Login a user ------#
+
+def my_login(request):
+
+	form = LoginForm()
+
+	if request.method == 'POST':
+		form = LoginForm(request, data =request.POST)
+
+		if form.is_valid():
+
+			username = request.POST.get('username')
+			password = request.POST.get('password')
+
+			user = authenticate(request, username=username, password=password)
+
+			if user is not None:
+
+				auth.login(request, user)
+
+				return redirect("dashboard")
+
+	return render(request, "my-login.html",  {'form': form})
+
+# ---- Dashboard -----#
+
+def dashboard(request):
+
+	return render(request, 'dashboard.html')
+
+# ----- Logout a user ------#
+
+def user_logout(request):
+
+	auth.logout(request)
+
+	return redirect("index")
+
+#----- EVENTS ------#
 
 def events(request):
 	event = Events.objects.all()
@@ -77,13 +135,6 @@ def delete_event(request, pk):
 	context = {'object': event}
 
 	return render(request, 'delete_event.html', context=context)
-
-
-
-
-
-
-
 
 
 # - WORK ORDERS
