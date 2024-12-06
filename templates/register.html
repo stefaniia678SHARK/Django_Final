@@ -1,17 +1,23 @@
 {%  include 'header.html' %}
+{% load static %}
 
 <!DOCTYPE html>
+<br>
+<br>
 
-<h1>
-    This our registration page!
-</h1>
 
-<form method ="POST" >
+    <div class="container bg-white shadow-md p-5 form-layout">
+        <h1>
+             This our registration page!
+        </h1>
+    <form method ="POST" >
 
-    {% csrf_token %}
+            {% csrf_token %}
 
-    {{form.as_p}}
+            {{form.as_p}}
 
-    <button type ="submit"> Add an user </button>
+            <button class ="btn btn-outline-primary" type="submit" > Add an user </button>
 
-</form>
+        </form>
+
+    </div>

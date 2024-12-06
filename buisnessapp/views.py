@@ -12,6 +12,9 @@ from django.contrib.auth.models import auth
 #---- For authentication, log in and log out we need to import ----#
 from django.contrib.auth import authenticate, login, logout
 
+from django.contrib.auth.decorators import login_required
+
+
 # - Home page, Header
 
 def index(request):
@@ -61,6 +64,7 @@ def my_login(request):
 
 # ---- Dashboard -----#
 
+@login_required(login_url='my-login')  #--Protecting our views (log in -> dashboard)  --#
 def dashboard(request):
 
 	return render(request, 'dashboard.html')

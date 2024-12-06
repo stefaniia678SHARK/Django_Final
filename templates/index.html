@@ -5,24 +5,89 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+
+    <meta name="viewport" content="width-device-width, initial-scale = 1, maximum-scale=1"/>
     <title>Title</title>
 
     <!--Linking CSS file -->
-
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
+<br>
+<br>
+<div class="text-center">
 
-<h1>Hello!</h1>
-    <h2>You are in a business app</h2>
-<img style="width:200px;" src="{% static 'image/buisness.jpeg' %}">
+    <h1> Business app</h1>
+    <h3> &quot;Home for your daily organisation &quot; </h3>
+<br>
+</div>
+<br>
+<br>
+
+<div class="main">
+
+    <h2> Why us?</h2>
+<h3>
+    <ul>
+
+        <li> Tired of Microsoft Teams?</li>
+        <li> Want to have everything in on app?</li>
+        <li> Want an app notify you about work orders before you get fired? </li>
+
+    </ul>
+</h3>
+    <h2>  Then you are definitely in the right place! </h2>
+<a class ="btn btn-outline-primary" type="button" href="/register/">Register</a>
+
+</div>
 </body>
 
-<!--Linking Java Script file -->
+<style>
+    .main {
+            text-align:center;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1.5s ease-in-out, float 3s infinite ease-in-out;
+        }
+    .main h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: cornflowerblue;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
 
-<script src = "{% static 'js/app.js' %}"> </script>
+        .main h3 {
+            text-align: left;
+            font-size: 1.5rem;
+            line-height: 2;
+        }
 
+       @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+</style>
 </html>
