@@ -7,5 +7,7 @@
 <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Update Event</button>
+
+    <a href = "{%  url 'view_event' %}"> Go back </a>
+    <button class= "btn btn-outline-primary" type="submit">Update Event</button>
 </form>

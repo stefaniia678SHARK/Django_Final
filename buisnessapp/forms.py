@@ -24,12 +24,14 @@ class LoginForm(AuthenticationForm):
     username = forms.CharField(widget= TextInput())
     password = forms.CharField(widget=PasswordInput())
 
+#---- Create an event ----#
 
 class EventsForm(ModelForm):
 
     class Meta:
         model = Events
-        fields = '__all__'
+        fields = ['event_name', 'description', 'date_of_the_event',]
+        exclude = ['user',]
 
 # --- that's a form for allowing users to make work_orders --- #
 

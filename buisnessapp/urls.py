@@ -27,5 +27,9 @@ urlpatterns = [
 
 #--------- Work_orders ---------#
 
-    path ('work_orders/', views.work_orders, name = 'work_orders'),
+     path ('work_orders/', views.work_orders, name = 'work_orders'),
+
+   # path('work_orders/', views.work_orders, name='work_orders'),
+  #  path('calendar/', views.calendar_view, name='calendar'),
+
 ]

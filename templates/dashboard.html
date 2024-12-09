@@ -1,4 +1,3 @@
-
 {% load static %}
 
 <!DOCTYPE html>
@@ -62,11 +61,36 @@
     <a class= "btn btn-outline-primary" type="button" href="{% url 'user-logout'  %}"> Logout </a>
 
 </div>
+<br>
+
+<!---Printing all events-->
+
+<h2> Here are your events: </h2>
+
+<br>
+
+{% for view_event in view_event %}
+
+            <div>
+                    <p><strong>Event Name:</strong> {{ view_event.event_name }}</p>
+                    <p><strong>Description:</strong> {{ view_event.description }}</p>
+                    <p><strong>Date: </strong> {{ view_event.date_of_the_event }}</p>
+                    <hr>
+                    <p><strong>Event ID:</strong> {{ view_event.id }}</p> <!-- Debugging -->
+
+            </div>
+
+            <a class= "btn btn-outline-primary" type= "button" href = "{% url 'update_event' view_event.id %}"> Update an event </a>
+        <br>
+        <br>
+
+            <a class= "btn btn-outline-primary" type= "button" href = "{% url 'delete_event' view_event.id %}"> Delete an event </a>
+
+        <br>
+        <br>
+
+{% endfor %}
 
 </body>
 
 </html>
-
-{% comment %}<a href = "/">Home</a> |
-<a href = "/view_events/">View Events</a> |<a href = "/register/">Register a user</a> |
-<a href="/my-login/">Go to log in page</a>{% endcomment %}

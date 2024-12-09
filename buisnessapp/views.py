@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-
+from calendar import HTMLCalendar
+from datetime import date
 # Create your views here.
 
 from django.shortcuts import render
@@ -14,6 +15,8 @@ from django.contrib.auth import authenticate, login, logout
 
 from django.contrib.auth.decorators import login_required
 
+from datetime import datetime, timedelta
+from django.contrib import messages
 
 # - Home page, Header
 
@@ -32,11 +35,23 @@ def register(request):
 	if request.method == 'POST':
 		form = CreateUserForm(request.POST)
 
-		if form.is_valid():
-			form.save()
-			return HttpResponse("The user registered successfully")
+	if form.is_valid():
 
-	return render(request, 'register.html', {'form': form})
+		user = form.save()
+		# Automatically log in the user
+		username = form.cleaned_data.get('username')
+		password = form.cleaned_data.get('password1')
+		user = authenticate(request, username=username, password=password)
+
+		if user is not None:
+			login(request, user)  # Log in the user
+			return redirect('dashboard')  # Redirect to dashboard
+
+	#if form.is_valid():
+		#	form.save()
+		#	return redirect('dashboard')
+
+	return render(request, 'main/register.html', {'form': form})
 
 # ----- Login a user ------#
 
@@ -60,14 +75,18 @@ def my_login(request):
 
 				return redirect("dashboard")
 
-	return render(request, "my-login.html",  {'form': form})
+	return render(request, "main/my-login.html", {'form': form})
 
 # ---- Dashboard -----#
 
 @login_required(login_url='my-login')  #--Protecting our views (log in -> dashboard)  --#
 def dashboard(request):
 
-	return render(request, 'dashboard.html')
+	view_event = Events.objects.all()
+
+	context = {'view_event': view_event}
+
+	return render(request, 'dashboard.html', context)
 
 # ----- Logout a user ------#
 
@@ -79,6 +98,7 @@ def user_logout(request):
 
 #----- EVENTS ------#
 
+@login_required(login_url='my-login')
 def events(request):
 	event = Events.objects.all()
 
@@ -89,19 +109,26 @@ def events(request):
 		form = EventsForm(request.POST)
 
 		if form.is_valid():
-			form.save()
-			return redirect('events')
 
-	return render(request, 'events.html', {'event': event, 'form': form})
+			event = form.save(commit=False)
+			event.user = request.user #linking a user to an event
+
+			event.save()
+			return redirect('dashboard')
+
+	return render(request, 'main/events.html', {'event': event, 'form': form})
 
 #  -  View created events
 
 def view_events(request):
-	view_event = Events.objects.all()
 
-	context = {'view_event': view_event}
+	current_user = request.user.id
 
-	return render(request, 'view_event.html', context = context)
+	event = Events.objects.all().filter(user=current_user)
+
+	context = {'view_event': event}
+
+	return render(request, 'dashboard.html', context = context)
 
 
 #  -  Update an event
@@ -119,9 +146,9 @@ def update_event(request, pk):
 		if form.is_valid():
 			form.save()
 
-			return redirect('view_event')
+			return redirect('dashboard')
 
-	return render(request, 'update_event.html', {'event': event, 'form': form})
+	return render(request, 'profile/update_event.html', {'event': event, 'form': form})
 
 #  -  Delete an event
 
@@ -134,11 +161,11 @@ def delete_event(request, pk):
 
 		event.delete()
 
-		return redirect('view_event')
+		return redirect('dashboard')
 
 	context = {'object': event}
 
-	return render(request, 'delete_event.html', context=context)
+	return render(request, 'profile/delete_event.html', context=context)
 
 
 # - WORK ORDERS
@@ -148,9 +175,10 @@ def work_orders(request):
 
 	form = WorkForm(request.POST or None)
 
-	return render(request, 'work_orders.html', {'orders': orders, 'form': form})
+	return render(request, 'main/work_orders.html', {'orders': orders, 'form': form})
 
 
 
 def create_work(request):
 	return redirect('work_orders')
+

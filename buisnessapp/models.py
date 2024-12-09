@@ -6,13 +6,16 @@ from django.db import models
 from django.db import models
 from django.contrib.auth.models import User
 
+#---- Create an event ------#
+
 class Events (models.Model):
+
     event_name = models.CharField(max_length=100)
     description = models.CharField(max_length = 200)
     date_of_the_event = models.DateField()
+    date_posted = models.DateTimeField(auto_now_add=True, null=True)
 
-    def __str__(self):
-       return f"Calendar for {self.event_name}: {self.description}"
+    user = models.ForeignKey(User, max_length=10, on_delete=models.CASCADE, null=True)
 
 class Work_Order (models.Model):
    #work_order = models.ForeignKey('self', on_delete=models.CASCADE)pe
@@ -22,6 +25,8 @@ class Work_Order (models.Model):
    due_date = models.DateField()
    done = models.BooleanField(default=False)
    in_progress = models.BooleanField(default=False)
+
+user = models.ForeignKey(User, max_length=10, on_delete=models.CASCADE, null=True)
 
 class Review(models.Model):
 
