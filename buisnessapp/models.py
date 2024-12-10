@@ -6,6 +6,14 @@ from django.db import models
 from django.db import models
 from django.contrib.auth.models import User
 
+#----- Profile ------#
+
+class Profile(models.Model):
+
+    profile_picture = models.ImageField(null=True, blank=True, default='default.webp')
+
+    user = models.ForeignKey(User, max_length=10, on_delete=models.CASCADE, null=True)
+
 #---- Create an event ------#
 
 class Events (models.Model):
@@ -16,6 +24,8 @@ class Events (models.Model):
     date_posted = models.DateTimeField(auto_now_add=True, null=True)
 
     user = models.ForeignKey(User, max_length=10, on_delete=models.CASCADE, null=True)
+
+#---- Create Work Order ----#
 
 class Work_Order (models.Model):
    #work_order = models.ForeignKey('self', on_delete=models.CASCADE)pe

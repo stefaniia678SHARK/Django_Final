@@ -1,0 +1,39 @@
+{%  include 'header.html' %}
+
+<!DOCTYPE html>
+<br>
+<br>
+    <body>
+
+      <div class="container bg-white shadow-md p-5">
+            <h1 class="text-center">
+                Update your profile!
+            </h1>
+
+            <form method ="POST" autocomplete="off">
+
+                {% csrf_token %}
+
+               {{ user_form.username }}
+    <br>
+                {{ user_form.email }}
+
+<br><br>
+                <a class ="btn btn-outline-primary" type="submit"> Update your profile </a>
+
+            </form>
+
+        </div>
+
+      <br>
+
+    <div class="container bg-white shadow-md p-5">
+
+        <h3 class="text-center"> Delete account</h3>
+            <a href="{% url 'delete-account' %}">Delete your account</a>
+
+    </div>
+    </body>
+
+
+

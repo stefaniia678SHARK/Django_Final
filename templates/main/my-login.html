@@ -1,8 +1,10 @@
 {%  include 'header.html' %}
 
+
 {% load static %}
 
 <!DOCTYPE html>
+
 <br>
 <br>
 
@@ -19,6 +21,24 @@
         {{form}}
 <br>
         <button class ="btn btn-outline-primary" type="submit"> Submit </button>
+        <br>
+        <br>
+
+        {%  for message in messages %}
+
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+
+                <p id="message_timer" class="alert alert-success float-center text-center"> {{ message }} </p>
+
+            {% endif %}
+
+        {% endfor %}
+
+        <br>
+        <br>
+        <p> Don't have an account?
+        <a href="{% url 'register' %}" > <br> Register</a> </p>
+
 
     </form>
 

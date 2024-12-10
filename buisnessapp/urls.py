@@ -18,6 +18,11 @@ urlpatterns = [
 #---------- Dashboard ---------#
     path('dashboard/', views.dashboard, name ='dashboard'),
 
+#---------- Profile management -------#
+    path ('profile-management/', views.profile_management, name ='profile-management'),
+
+#--------Delete an account ------#
+    path('delete-account', views.deleteAccount, name ='delete-account'),
 
 #---------- Events ----------#
     path('events/', views.events, name='events'),

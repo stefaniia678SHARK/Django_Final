@@ -1,0 +1,15 @@
+{%  include 'header.html' %}
+
+<!DOCTYPE html>
+
+<h2> Here are your events: </h2>
+
+{% for view_work_orders in view_work_orders %}
+
+        <div>
+            <p><strong>Event Name:</strong> {{ view_event.event_name }}</p>
+            <p><strong>Description:</strong> {{ view_event.description }}</p>
+            <p>Event ID: {{ view_event.id }}</p> <!-- Debugging -->
+        </div>
+
+{% endfor %}

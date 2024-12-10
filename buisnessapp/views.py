@@ -5,10 +5,10 @@ from datetime import date
 # Create your views here.
 
 from django.shortcuts import render
-from .models import Events, Work_Order
-from .forms import EventsForm, WorkForm, CreateUserForm, LoginForm
+from .models import Events, Work_Order, Profile
+from .forms import EventsForm, WorkForm, CreateUserForm, LoginForm, UpdateUserForm
 
-from django.contrib.auth.models import auth
+from django.contrib.auth.models import auth, User
 
 #---- For authentication, log in and log out we need to import ----#
 from django.contrib.auth import authenticate, login, logout
@@ -37,15 +37,22 @@ def register(request):
 
 	if form.is_valid():
 
+		current_user = form.save(commit=False)
+
 		user = form.save()
-		# Automatically log in the user
+
+		profile = Profile.objects.create(user=user)
+
+		messages.success(request, "User registration was successful!")
+
 		username = form.cleaned_data.get('username')
 		password = form.cleaned_data.get('password1')
+
 		user = authenticate(request, username=username, password=password)
 
 		if user is not None:
 			login(request, user)  # Log in the user
-			return redirect('dashboard')  # Redirect to dashboard
+			return redirect('my-login')  # Redirect to dashboard
 
 	#if form.is_valid():
 		#	form.save()
@@ -88,6 +95,46 @@ def dashboard(request):
 
 	return render(request, 'dashboard.html', context)
 
+# ---- Profile management ----#
+
+@login_required(login_url='my-login')
+def profile_management(request):
+
+	if request.method == 'POST':
+
+		user_form = UpdateUserForm(request.POST, instance=request.user)
+
+		if user_form.is_valid():
+
+			user_form.save()
+
+			return redirect ('dashboard')
+
+	user_form = UpdateUserForm(instance=request.user)
+
+	return render(request, 'profile/profile-management.html', {'user_form': user_form})
+
+# ----- Delete an account -----#
+
+@login_required(login_url='my-login')
+def deleteAccount(request):
+
+	if request.method == 'POST':
+
+		try:
+
+			deleteUser = User.objects.get(username=request.user.username)  # Fetch the logged-in user
+			deleteUser.delete()  # Delete the user
+
+			return redirect('index')
+
+		except User.DoesNotExist:
+			messages.error(request, "User does not exist.")
+
+			return redirect('dashboard')
+
+	return render(request, 'profile/delete-account.html')
+
 # ----- Logout a user ------#
 
 def user_logout(request):
@@ -112,8 +159,8 @@ def events(request):
 
 			event = form.save(commit=False)
 			event.user = request.user #linking a user to an event
-
 			event.save()
+
 			return redirect('dashboard')
 
 	return render(request, 'main/events.html', {'event': event, 'form': form})

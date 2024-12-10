@@ -1,0 +1,22 @@
+{%  include 'header.html' %}
+
+<!DOCTYPE html>
+
+<h1> Delete an account</h1>
+
+<hr>
+<br>
+
+
+<form method ="POST" autocomplete="off">
+
+    {% csrf_token %}
+<br>
+    <p> Are you sure you want to delete your account ? </p>
+
+        <button class= "btn btn-outline-primary" type ="submit"> Delete </button>
+    <br>
+    <a href = "{%  url 'profile-management' %}"> Go back </a>
+
+
+</form>

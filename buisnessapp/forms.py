@@ -24,6 +24,18 @@ class LoginForm(AuthenticationForm):
     username = forms.CharField(widget= TextInput())
     password = forms.CharField(widget=PasswordInput())
 
+# --- Update a user ---#
+
+class UpdateUserForm(forms.ModelForm):
+
+    password = None
+
+    class Meta:
+
+        model = User
+        fields = ['username', 'email', ]
+        exclude = ['password1', 'password2']
+
 #---- Create an event ----#
 
 class EventsForm(ModelForm):

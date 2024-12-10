@@ -59,13 +59,36 @@
 
     <h2>Here you can assign work orders</h2>
 
+    <br>
+
     <form method="POST" action="{% url 'events' %}">
 
         {% csrf_token %}
 
-         {{form.as_p}}
+            <label for="work_name"> Work Order:</label>
+            <input type="text" name="work_name" id="work_name" required>
+        <br>
+        <br>
+            <label for="description">Description: </label>
+            <input type="text" name="description" id="description" required>
+        <br>
+        <br>
+            <label for="due_date">Due date: </label>
+            <input type="date" name="due_date" id="due_date" required>
+        <br>
+        <br>
+            <label for="done">Done:</label>
+            <input type="checkbox" name="done" id="done" required>
+        <br>
+        <br>
+            <label for="in_progress">In progress</label>
+            <input type="checkbox" name="in_progress" id="in_progress" required>
+        <br>
+        <br>
+
+
 <br>
-        <button class ="btn btn-outline-primary" type="button"> Add a work order
+        <button class ="btn btn-outline-primary" type="submit"> Add a work order
         </button>
 
     </form>

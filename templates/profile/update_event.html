@@ -3,11 +3,18 @@
 <!DOCTYPE html>
 
 <h1> You can update your event</h1>
-
+<br>
 <form method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
 
+        <label for="event_name">Event name:</label>
+        <input type="text" name="event_name" id="event_name" required> <br>
+        <label for="description">Description</label>
+        <input type="text" name="description" id="description" required> <br>
+        <label for="date_of_the_event">Date of the event:</label>
+        <input type="date" name="date_of_the_event" id="date_of_the_event" required> <br>
+
+    <br>
     <a href = "{%  url 'view_event' %}"> Go back </a>
     <button class= "btn btn-outline-primary" type="submit">Update Event</button>
 </form>
