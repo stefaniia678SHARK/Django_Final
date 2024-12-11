@@ -18,15 +18,24 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
 from django.contrib import messages
 
+#--- For cookie ----#
+
+def set_theme_preference(request):
+    theme = request.GET.get('theme', 'light')
+    response = redirect("dashboard")
+    response.set_cookie('theme', theme, max_age=7*24*60*60)
+    return response
+
+
+#--- default will be light theme
+
 # - Home page, Header
-
 def index(request):
-
-	event = Events.objects.all()
-	return render(request, 'index.html', {'event': Events})
+	return render(request, 'index.html')
 
 def header (request):
 	return render(request, 'header.html')
+
 
 # ----- Register/create a user ------#
 
@@ -91,16 +100,27 @@ def my_login(request):
 @login_required(login_url='my-login')  #--Protecting our views (log in -> dashboard)  --#
 def dashboard(request):
 
-	profile = Profile.objects.get(user=request.user)
+	#profile = Profile.objects.get(user=request.user)
 
-	view_event = Events.objects.all()
+	theme = request.COOKIES.get('theme', 'light')
 
-	return render(request, 'dashboard.html', {'view_event': view_event, 'profile': profile})
+	current_user = request.user.id
+
+	view_event = Events.objects.all().filter(user=current_user)
+
+	work_order = Work_Order.objects.all().filter(user=current_user)
+
+	return render(request, 'dashboard.html',
+				  {'theme': theme,
+				   'view_event': view_event,
+				   'view_work_orders': work_order}) #'profile': profile})
 
 # ---- Profile management ----#
 
 @login_required(login_url='my-login')
 def profile_management(request):
+
+	theme = request.COOKIES.get('theme', 'light')
 
 	if request.method == 'POST':
 
@@ -114,7 +134,7 @@ def profile_management(request):
 
 	user_form = UpdateUserForm(instance=request.user)
 
-	return render(request, 'profile/profile-management.html', {'user_form': user_form})
+	return render(request, 'profile/profile-management.html', {'theme':theme,'user_form': user_form})
 
 # ----- Delete an account -----#
 
@@ -139,6 +159,7 @@ def deleteaccount(request):
 
 # ----- Logout a user ------#
 
+@login_required(login_url='my-login')
 def user_logout(request):
 
 	auth.logout(request)
@@ -149,40 +170,47 @@ def user_logout(request):
 
 @login_required(login_url='my-login')
 def events(request):
+
+	theme = request.COOKIES.get('theme', 'light')
+
 	event = Events.objects.all()
 
 	form = EventsForm()
 
 # Creating an event
+
 	if request.method == 'POST':
-		form = EventsForm(request.POST)
+		form = EventsForm(request.POST, request.FILES)
 
 		if form.is_valid():
-
 			event = form.save(commit=False)
-			event.user = request.user #linking a user to an event
+			event.user = request.user
 			event.save()
 
 			return redirect('dashboard')
 
-	return render(request, 'main/events.html', {'event': event, 'form': form})
+	return render(request, 'main/events.html', {'theme':theme,'event': event, 'form': form})
 
 #  -  View created events
 
 def view_events(request):
+	theme = request.COOKIES.get('theme', 'light')
 
 	current_user = request.user.id
 
 	event = Events.objects.all().filter(user=current_user)
 
-	context = {'view_event': event}
+	context = {'theme': theme,'view_event': event}
 
 	return render(request, 'dashboard.html', context = context)
 
 
 #  -  Update an event
 
+@login_required(login_url='my-login')
 def update_event(request, pk):
+
+	theme = request.COOKIES.get('theme', 'light')
 
 	event = Events.objects.get(id=pk)
 #updating an instance, specific object that we want to update
@@ -197,12 +225,14 @@ def update_event(request, pk):
 
 			return redirect('dashboard')
 
-	return render(request, 'profile/update_event.html', {'event': event, 'form': form})
+	return render(request, 'profile/update_event.html', {'theme':theme,'event': event, 'form': form})
 
 #  -  Delete an event
 
 
+@login_required(login_url='my-login')
 def delete_event(request, pk):
+	theme = request.COOKIES.get('theme', 'light')
 
 	event = Events.objects.get(id=pk)
 
@@ -212,22 +242,44 @@ def delete_event(request, pk):
 
 		return redirect('dashboard')
 
-	context = {'object': event}
+	context = {'theme':theme,'object': event}
 
 	return render(request, 'profile/delete_event.html', context=context)
 
 
 # - WORK ORDERS
 
+@login_required(login_url='my-login')
 def work_orders(request):
-	orders = Work_Order.objects.all()
+	theme = request.COOKIES.get('theme', 'light')
 
+	orders = Work_Order.objects.all()
 	form = WorkForm(request.POST or None)
 
-	return render(request, 'main/work_orders.html', {'orders': orders, 'form': form})
+	if request.method == 'POST':
+		form = WorkForm(request.POST, request.FILES)
 
+		if form.is_valid():
+			work_orders = form.save(commit=False)
+			work_orders.user = request.user
+			work_orders.save()
 
+			return redirect('dashboard')
 
+	return render(request, 'main/work_orders.html', {'theme': theme,'orders': orders, 'form': form})
+
+@login_required(login_url='my-login')
+def view_work_orders(request):
+
+	current_user = request.user.id
+
+	work_orders = Work_Order.objects.all().filter(user=current_user)
+
+	context = {'view_work_orders': work_orders}
+
+	return render(request, 'dashboard.html', context = context)
+
+@login_required(login_url='my-login')
 def create_work(request):
 	return redirect('work_orders')
 

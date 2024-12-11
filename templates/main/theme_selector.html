@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+        <head>
+            <meta charset="UTF-8">
+
+            <meta name="viewport" content="width-device-width, initial-scale = 1, maximum-scale=1"/>
+            <title>Theme Selector</title>
+
+            <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+        </head>
+
+        <body class="{{ theme }}">
+            <h1>Choose Your Theme</h1>
+
+            <form method="get" action="{% url 'set_theme_preference' %}">
+
+                <label>Select Theme:</label>
+                <select name="theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+                <button type="submit">Save</button>
+
+            </form>
+
+            <p>Your selected theme is: {{ theme }}</p>
+
+        </body>
+

@@ -6,7 +6,11 @@ from django.conf.urls.static import settings
 
 from django.contrib.staticfiles.urls import static
 
+from django.contrib.auth import views as auth_views
+
 urlpatterns = [
+
+    path('set_theme_preference/', views.set_theme_preference, name='set_theme_preference'),
     path('', views.index, name='index'),
     path('admin/', admin.site.urls),
     path('header/', views.header, name ='header'),
@@ -37,9 +41,9 @@ urlpatterns = [
 
 #--------- Work_orders ---------#
 
-     path ('work_orders/', views.work_orders, name = 'work_orders'),
+    path ('work_orders/', views.work_orders, name = 'work_orders'),
+    path ('view_work_orders/', views.view_work_orders, name ='view_work_orders'),
 
-   # path('work_orders/', views.work_orders, name='work_orders'),
   #  path('calendar/', views.calendar_view, name='calendar'),
 
 ]

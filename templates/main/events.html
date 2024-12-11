@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width-device-width, initial-scale = 1, maximum-scale=1"/>
-    <title>Title</title>
+    <title>Events</title>
 
     <!--Linking CSS file -->
     <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/morph/bootstrap.css">
@@ -20,6 +20,15 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
+
+       <style>
+
+        body.dark{
+            background-color: #000000;
+            color: black;
+        }
+
+        </style>
 
 
 </head>
@@ -52,7 +61,7 @@
 <br>
 <br>
 
-<body>
+<body class="{{ theme }}">
 
     <div class="container bg-white shadow-md p-5">
 
@@ -60,7 +69,7 @@
             Here you can put new events!
         </h1>
 
-        <form method ="POST" action = "{% url 'events' %}">
+        <form method ="POST" action = "{% url 'events' %}" enctype="multipart/form-data">
 
             {% csrf_token %}
 
@@ -70,7 +79,6 @@
             <input type="text" name="description" id="description" required> <br>
             <label for="date_of_the_event">Date of the event:</label>
             <input type="date" name="date_of_the_event" id="date_of_the_event" required> <br>
-
 <br>
             <button class ="btn btn-outline-primary" type="submit"> Add an event </button>
 

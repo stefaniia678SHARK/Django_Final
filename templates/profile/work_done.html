@@ -22,15 +22,6 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
 
-        <style>
-
-        body.dark{
-            background-color: #000000;
-            color: #ffffff;
-        }
-
-        </style>
-
 
 </head>
 
@@ -62,21 +53,16 @@
 
 <body class="{{ theme }}">
 
-<h1> You can update your event</h1>
-<br>
-<form method="POST">
+<form method ="POST" action ="{% url 'delete_event' object.id %}">
+
     {% csrf_token %}
 
-        <label for="event_name">Event name:</label>
-        <input type="text" name="event_name" id="event_name" required> <br>
-        <label for="description">Description</label>
-        <input type="text" name="description" id="description" required> <br>
-        <label for="date_of_the_event">Date of the event:</label>
-        <input type="date" name="date_of_the_event" id="date_of_the_event" required> <br>
+    <p> Are you sure you want to delete "{{ object }}" ? </p>
 
-    <br>
-    <a href = "{%  url 'dashboard' %}"> Go back </a>
-    <button class= "btn btn-outline-primary" type="submit">Update Event</button>
+    <a href = "{%  url 'view_event' %}"> Go back </a>
+
+    <button class= "btn btn-outline-primary" type ="submit"> Delete  </button>
+
 </form>
 
 </body>

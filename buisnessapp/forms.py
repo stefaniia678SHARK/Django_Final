@@ -50,4 +50,4 @@ class EventsForm(ModelForm):
 class WorkForm(ModelForm):
     class Meta:
         model = Work_Order
-        fields = '__all__'
+        fields = ['work_name', 'description', 'due_date', 'in_progress',]

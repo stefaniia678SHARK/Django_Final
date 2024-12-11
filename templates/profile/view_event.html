@@ -60,7 +60,10 @@
         <div>
             <p><strong>Event Name:</strong> {{ view_event.event_name }}</p>
             <p><strong>Description:</strong> {{ view_event.description }}</p>
-            <p>Event ID: {{ view_event.id }}</p> <!-- Debugging -->
+            <br>
+            <p>Event ID: {{ view_event.id }}</p>
+
+
         </div>
 
             <button> <a href = "{% url 'update_event' view_event.id %}"> Update an event </a> </button>

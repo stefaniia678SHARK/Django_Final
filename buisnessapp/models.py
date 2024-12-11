@@ -20,6 +20,7 @@ class Events (models.Model):
     description = models.CharField(max_length = 200)
     date_of_the_event = models.DateField()
     date_posted = models.DateTimeField(auto_now_add=True, null=True)
+    icon = models.ImageField(upload_to='images/', null=True, blank=True)
 
     user = models.ForeignKey(User, max_length=10, on_delete=models.CASCADE, null=True)
 
@@ -31,7 +32,6 @@ class Work_Order (models.Model):
    description = models.CharField(max_length=200)
    date_posted = models.DateTimeField(auto_now_add=True)
    due_date = models.DateField()
-   done = models.BooleanField(default=False)
    in_progress = models.BooleanField(default=False)
 
    user = models.ForeignKey(User, max_length=10, on_delete=models.CASCADE, null=True)

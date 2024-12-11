@@ -12,7 +12,7 @@
 
     <!--Linking CSS file -->
     <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/morph/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <!--Linking Java Script file -->
     <script src = "{% static 'js/app.js' %}"> </script>
@@ -22,6 +22,14 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
 
+    <style>
+
+        body.dark{
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+    </style>
 
 </head>
 <!-- Navigation bar -->
@@ -50,7 +58,9 @@
   </div>
 </nav>
 
-<body>
+<body class="{{ theme }}">
+<br>
+<br>
 <br>
 <br>
 
@@ -61,14 +71,35 @@
     <!--<a class= "btn btn-outline-primary" type="button" href="{% url 'user-logout'  %}"> Logout </a> -->
 
     <img style = "width: 200px;" src="{{ profile.profile_picture.url }}"/>
+<!-- Theme selection -->
 
+<div class="text-center">
+    <h5>This is theme selector!</h5>
+
+    <form method="get" action="{% url 'set_theme_preference' %}">
+
+        <label>Select Theme:</label>
+
+        <select name="theme">
+
+            <option value="light"{% if theme == "light" %}selected{% endif %}>Light</option>
+            <option value="dark" {% if theme == "dark" %}selected{% endif %}>Dark</option>
+
+        </select>
+
+        <button type="submit">Save</button>
+
+    </form>
+
+</div>
     <br>
     <a href ="{% url 'profile-management' %}">Profile management</a>
 </div>
 <br>
 
 <!---Printing all events-->
-
+<div class="content">
+<div class="left box">
 <h2> Here are your events: </h2>
 
 <br>
@@ -94,6 +125,26 @@
         <br>
 
 {% endfor %}
+</div>
+
+<div class="right box">
+<h2>Here are your work orders:</h2>
+
+{% for order in view_work_orders %}
+
+        <div>
+            <p><strong>Work order:</strong> {{ order.work_name }}</p>
+            <p><strong>Description:</strong> {{ order.description }}</p>
+            <p><strong>Due Date:</strong> {{ order.due_date }}</p>
+           <!-- <p><strong>Status:</strong>  "In Progress" if order.in_progress else "Not Started"}}</p>-->
+        </div>
+        <hr>
+
+{% endfor %}
+
+</div>
+
+</div>
 
 </body>
 
