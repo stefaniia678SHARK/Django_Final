@@ -1,6 +1,11 @@
 from django.urls import path
 from . import views
 from django.contrib import admin
+
+from django.conf.urls.static import settings
+
+from django.contrib.staticfiles.urls import static
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('admin/', admin.site.urls),
@@ -22,7 +27,7 @@ urlpatterns = [
     path ('profile-management/', views.profile_management, name ='profile-management'),
 
 #--------Delete an account ------#
-    path('delete-account', views.deleteAccount, name ='delete-account'),
+    path('delete-account', views.deleteaccount, name ='delete-account'),
 
 #---------- Events ----------#
     path('events/', views.events, name='events'),
@@ -38,3 +43,5 @@ urlpatterns = [
   #  path('calendar/', views.calendar_view, name='calendar'),
 
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

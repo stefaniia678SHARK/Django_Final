@@ -1,5 +1,3 @@
-from decouple import TRUE_VALUES
-from django.db import models
 
 # Create your models here.
 
@@ -36,7 +34,7 @@ class Work_Order (models.Model):
    done = models.BooleanField(default=False)
    in_progress = models.BooleanField(default=False)
 
-user = models.ForeignKey(User, max_length=10, on_delete=models.CASCADE, null=True)
+   user = models.ForeignKey(User, max_length=10, on_delete=models.CASCADE, null=True)
 
 class Review(models.Model):
 

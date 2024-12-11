@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 
 from django.contrib import admin
-from .models import Events, Work_Order, Review
+from .models import Events, Work_Order, Profile, Review
 
 admin.site.register(Events)
 class EventsAdmin(admin.ModelAdmin):
@@ -12,4 +12,4 @@ class EventsAdmin(admin.ModelAdmin):
 
 admin.site.register(Work_Order)
 
-admin.site.register(Review)
+admin.site.register(Profile)

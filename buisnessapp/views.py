@@ -21,8 +21,10 @@ from django.contrib import messages
 # - Home page, Header
 
 def index(request):
+
 	event = Events.objects.all()
 	return render(request, 'index.html', {'event': Events})
+
 def header (request):
 	return render(request, 'header.html')
 
@@ -35,24 +37,24 @@ def register(request):
 	if request.method == 'POST':
 		form = CreateUserForm(request.POST)
 
-	if form.is_valid():
+		if form.is_valid():
 
-		current_user = form.save(commit=False)
+			current_user = form.save(commit=False)
 
-		user = form.save()
+			user = form.save()
 
-		profile = Profile.objects.create(user=user)
+			profile = Profile.objects.create(user=user)
 
-		messages.success(request, "User registration was successful!")
+			messages.success(request, "User registration was successful!")
 
-		username = form.cleaned_data.get('username')
-		password = form.cleaned_data.get('password1')
+			username = form.cleaned_data.get('username')
+			password = form.cleaned_data.get('password1')
 
-		user = authenticate(request, username=username, password=password)
+			user = authenticate(request, username=username, password=password)
 
-		if user is not None:
-			login(request, user)  # Log in the user
-			return redirect('my-login')  # Redirect to dashboard
+			if user is not None:
+				login(request, user)  # Log in the user
+				return redirect('my-login')  # Redirect to dashboard
 
 	#if form.is_valid():
 		#	form.save()
@@ -89,11 +91,11 @@ def my_login(request):
 @login_required(login_url='my-login')  #--Protecting our views (log in -> dashboard)  --#
 def dashboard(request):
 
+	profile = Profile.objects.get(user=request.user)
+
 	view_event = Events.objects.all()
 
-	context = {'view_event': view_event}
-
-	return render(request, 'dashboard.html', context)
+	return render(request, 'dashboard.html', {'view_event': view_event, 'profile': profile})
 
 # ---- Profile management ----#
 
@@ -117,7 +119,7 @@ def profile_management(request):
 # ----- Delete an account -----#
 
 @login_required(login_url='my-login')
-def deleteAccount(request):
+def deleteaccount(request):
 
 	if request.method == 'POST':
 
