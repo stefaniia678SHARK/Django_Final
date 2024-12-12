@@ -48,7 +48,6 @@
     margin: 20px;
 }
 
-/*
 
 .box {
     width: 48%;
@@ -58,14 +57,13 @@
     padding: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-*/
 
-body.light {
+/*body.light {
     background-color: #ffffff;
     color: #000000;
-}
+}*/
 
 body.dark{
     background-color: #000000;
-    color: #ffffff;
+    color: #02033c;
 }

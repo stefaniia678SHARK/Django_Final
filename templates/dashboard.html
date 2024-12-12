@@ -25,8 +25,9 @@
     <style>
 
         body.dark{
-            background-color: #000000;
+            background-color: #02033c;
             color: #ffffff;
+
         }
 
     </style>
@@ -66,7 +67,7 @@
 
 <div class="text-center">
 
-<h1> Welcome to your dashboard</h1>
+<h1> Welcome to your dashboard, {{ user }}</h1>
 
     <!--<a class= "btn btn-outline-primary" type="button" href="{% url 'user-logout'  %}"> Logout </a> -->
 
@@ -111,7 +112,7 @@
                     <p><strong>Description:</strong> {{ view_event.description }}</p>
                     <p><strong>Date: </strong> {{ view_event.date_of_the_event }}</p>
                     <hr>
-                    <p><strong>Event ID:</strong> {{ view_event.id }}</p> <!-- Debugging -->
+                    <!--<p><strong>Event ID:</strong>  view_event.id }}</p> -->
 
             </div>
 

@@ -106,6 +106,8 @@ def dashboard(request):
 
 	current_user = request.user.id
 
+	user = request.user
+
 	view_event = Events.objects.all().filter(user=current_user)
 
 	work_order = Work_Order.objects.all().filter(user=current_user)
@@ -113,7 +115,8 @@ def dashboard(request):
 	return render(request, 'dashboard.html',
 				  {'theme': theme,
 				   'view_event': view_event,
-				   'view_work_orders': work_order}) #'profile': profile})
+				   'view_work_orders': work_order,
+				   'user':user, }) #'profile': profile})
 
 # ---- Profile management ----#
 
