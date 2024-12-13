@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Events, Work_Order
+from .models import Events, Work_Order, Profile
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -10,6 +10,17 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.forms.widgets import PasswordInput, TextInput
 
 from django import forms
+
+
+#-- Update a profile picture --#
+
+#class UpdateProfileFrom (forms.ModelForm):
+
+#    profile_picture = forms.ImageField(widget=forms.FileInput(attrs={'class':'form-control-file'}))
+
+#    class Meta:
+#        model = Profile
+#        fields = ['profile_picture',]
 
 
 class CreateUserForm(UserCreationForm):

@@ -6,11 +6,11 @@ from django.contrib.auth.models import User
 
 #----- Profile ------#
 
-class Profile(models.Model):
+#class Profile(models.Model):
 
-    profile_picture = models.ImageField(null=True, blank=True, default='default.webp')
+#    profile_picture = models.ImageField(null=True, blank=True, default='default.webp')
 
-    user = models.ForeignKey(User, max_length=10, on_delete=models.CASCADE, null=True)
+#    user = models.ForeignKey(User, max_length=10, on_delete=models.CASCADE, null=True)
 
 #---- Create an event ------#
 

@@ -6,7 +6,7 @@ from datetime import date
 
 from django.shortcuts import render
 from .models import Events, Work_Order, Profile
-from .forms import EventsForm, WorkForm, CreateUserForm, LoginForm, UpdateUserForm
+from .forms import EventsForm, WorkForm, CreateUserForm, LoginForm #UpdateUserForm
 
 from django.contrib.auth.models import auth, User
 
@@ -116,18 +116,26 @@ def dashboard(request):
 				  {'theme': theme,
 				   'view_event': view_event,
 				   'view_work_orders': work_order,
-				   'user':user, }) #'profile': profile})
+				   'user':user}) #'profile': profile})
 
 # ---- Profile management ----#
 
 @login_required(login_url='my-login')
 def profile_management(request):
 
+	user_form = UpdateUserForm(instance=request.user)
+
+	#profile = Profile.objects.get(user=request.user)
+
+	#form_2 = UpdateUserForm(instance=profile)
+
 	theme = request.COOKIES.get('theme', 'light')
 
 	if request.method == 'POST':
 
-		user_form = UpdateUserForm(request.POST, instance=request.user)
+		#user_form = UpdateUserForm(request.POST, instance=request.user)
+
+		#form_2 = UpdateUserForm(request.POST, request.FILES, instance=profile)
 
 		if user_form.is_valid():
 
@@ -135,9 +143,15 @@ def profile_management(request):
 
 			return redirect ('dashboard')
 
-	user_form = UpdateUserForm(instance=request.user)
+		#if form_2.is_valid():
 
-	return render(request, 'profile/profile-management.html', {'theme':theme,'user_form': user_form})
+		#	form_2.save()
+
+		#	return redirect ('dashboard')
+
+	return render(request, 'profile/profile-management.html',
+				  {'theme':theme,
+				   'user_form': user_form}) #'form_2': form_2})
 
 # ----- Delete an account -----#
 
