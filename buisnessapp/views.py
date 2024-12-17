@@ -6,7 +6,7 @@ from datetime import date
 
 from django.shortcuts import render
 from .models import Events, Work_Order, Profile
-from .forms import EventsForm, WorkForm, CreateUserForm, LoginForm #UpdateUserForm
+from .forms import EventsForm, WorkForm, CreateUserForm, LoginForm UpdateUserForm
 
 from django.contrib.auth.models import auth, User
 
@@ -133,7 +133,7 @@ def profile_management(request):
 
 	if request.method == 'POST':
 
-		#user_form = UpdateUserForm(request.POST, instance=request.user)
+		user_form = UpdateUserForm(request.POST, instance=request.user)
 
 		#form_2 = UpdateUserForm(request.POST, request.FILES, instance=profile)
 
